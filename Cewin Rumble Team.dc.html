@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { margin:0; background:#0B0B0C; color:#F2F2F0; font-family:Barlow, Helvetica, Arial, sans-serif; }
+  * { box-sizing:border-box; }
+  a { color:#F2F2F0; text-decoration:none; }
+  a:hover { color:#D91E2A; }
+  input, select, textarea { font-family:Barlow, Helvetica, Arial, sans-serif; }
+  input::placeholder, textarea::placeholder { color:#5C5C63; }
+  ::selection { background:#D91E2A; color:#fff; }
+  @keyframes crtFadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#0B0B0C;">
+
+  <header style="{{ headerStyle }}">
+    <div onClick="{{ goStart }}" style="display:flex; align-items:center; gap:12px; cursor:pointer; flex-shrink:0;">
+      <img src="uploads/539444536_17921984790103977_878909258803261491_n.jpg" alt="Cewin Rumble Team" style="{{ logoStyle }}" />
+      <div style="display:flex; flex-direction:column; line-height:1;">
+        <span style="{{ brandStyle }}">CEWIN <span style="color:#D91E2A;">★</span> RUMBLE <span style="color:#D91E2A;">★</span> TEAM</span>
+        <span style="{{ tagStyle }}">WARSZAWA · BOKS · K1</span>
+      </div>
+    </div>
+
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex:1; justify-content:flex-end; align-items:center; gap:18px;">
+        <nav style="display:flex; align-items:center; gap:2px;">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="6">
+            <a href="#" onClick="{{ item.go }}" style="{{ item.style }}">{{ item.label }}</a>
+          </sc-for>
+        </nav>
+        <div style="width:1px; height:26px; background:rgba(255,255,255,0.14);"></div>
+        <div style="display:flex; flex:0 0 auto; white-space:nowrap; border:1px solid rgba(255,255,255,0.16); border-radius:2px; overflow:hidden;">
+          <button onClick="{{ setPl }}" style="{{ plStyle }}">PL</button>
+          <button onClick="{{ setEn }}" style="{{ enStyle }}">EN</button>
+        </div>
+        <a href="#" onClick="{{ goPersonal }}" style="display:inline-block; flex-shrink:0; padding:12px 20px; background:#D91E2A; color:#fff; font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:14px; letter-spacing:0.14em; border-radius:2px; white-space:nowrap;" style-hover="background:#F02334;">{{ t.cta }}</a>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:flex; flex-direction:column; justify-content:center; gap:6px; width:48px; height:48px; padding:0 10px; background:transparent; border:1px solid rgba(255,255,255,0.18); border-radius:2px; cursor:pointer;">
+        <span style="{{ bar1 }}"></span>
+        <span style="{{ bar2 }}"></span>
+        <span style="{{ bar3 }}"></span>
+      </button>
+    </sc-if>
+  </header>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; inset:0; z-index:60; background:#0B0B0C; display:flex; flex-direction:column; padding:22px 22px 32px; overflow-y:auto;">
+      <div style="display:flex; justify-content:flex-end; margin-bottom:18px;">
+        <button onClick="{{ toggleMenu }}" aria-label="Close" style="width:48px; height:48px; background:transparent; border:1px solid rgba(255,255,255,0.18); border-radius:2px; color:#F2F2F0; font-size:22px; cursor:pointer;">✕</button>
+      </div>
+      <nav style="display:flex; flex-direction:column; gap:2px;">
+        <sc-for list="{{ mobileNav }}" as="item" hint-placeholder-count="6">
+          <a href="#" onClick="{{ item.go }}" style="{{ item.style }}">{{ item.label }}</a>
+        </sc-for>
+      </nav>
+      <div style="display:flex; align-items:center; gap:14px; margin-top:auto; padding-top:32px;">
+        <div style="display:flex; flex:0 0 auto; border:1px solid rgba(255,255,255,0.16); border-radius:2px; overflow:hidden;">
+          <button onClick="{{ setPl }}" style="{{ plStyle }}">PL</button>
+          <button onClick="{{ setEn }}" style="{{ enStyle }}">EN</button>
+        </div>
+        <a href="#" onClick="{{ goPersonal }}" style="flex:1; text-align:center; padding:16px 20px; background:#D91E2A; color:#fff; font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:15px; letter-spacing:0.14em; border-radius:2px;">{{ t.cta }}</a>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ══ START ══ -->
+  <sc-if value="{{ isStart }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <section style="position:relative; min-height:88vh; display:flex; align-items:flex-end; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.09);">
+      <img src="uploads/Michal.webp" alt="Michał Cewiński" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:60% 30%; filter:grayscale(0.35) contrast(1.08);" />
+      <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(11,11,12,0.94) 0%, rgba(11,11,12,0.72) 42%, rgba(11,11,12,0.25) 100%);"></div>
+      <div style="position:absolute; inset:0; background:linear-gradient(0deg, #0B0B0C 2%, rgba(11,11,12,0) 45%);"></div>
+      <div style="position:relative; padding:0 32px 72px; max-width:1000px; animation:crtFadeUp 0.6s ease both;">
+        <div style="display:flex; align-items:center; gap:10px; font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:20px;">
+          <span style="width:34px; height:2px; background:#D91E2A; display:inline-block;"></span>{{ t.heroKicker }}
+        </div>
+        <h1 style="font-family:Anton, sans-serif; font-size:clamp(46px, 7.4vw, 104px); line-height:1.14; letter-spacing:-0.01em; margin:0 0 22px; text-transform:uppercase; text-wrap:balance;"><span style="display:block;">{{ t.heroLine1 }}</span><span style="display:block; color:#D91E2A;">{{ t.heroLine2 }}</span></h1>
+        <p style="max-width:520px; font-size:18px; line-height:1.55; color:#B9B9BE; margin:0 0 34px;">{{ t.heroSub }}</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a href="#" onClick="{{ goPersonal }}" style="padding:16px 30px; background:#D91E2A; color:#fff; font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:16px; letter-spacing:0.16em; border-radius:2px;" style-hover="background:#F02334;">{{ t.ctaBook }}</a>
+          <a href="#" onClick="{{ goGroup }}" style="padding:16px 30px; border:1px solid rgba(255,255,255,0.3); font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:16px; letter-spacing:0.16em; border-radius:2px;" style-hover="border-color:#fff;">{{ t.ctaGroup }}</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:96px 32px; max-width:1280px; margin:0 auto;">
+      <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:16px;">{{ t.offerKicker }}</div>
+      <h2 style="font-family:Anton, sans-serif; font-size:clamp(32px,4vw,54px); margin:0 0 48px; text-transform:uppercase;">{{ t.offerTitle }}</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+        <sc-for list="{{ offers }}" as="o" hint-placeholder-count="3">
+          <a href="#" onClick="{{ o.go }}" style="display:block; padding:34px 30px 30px; background:#121214; border:1px solid rgba(255,255,255,0.09); border-radius:3px;" style-hover="border-color:#D91E2A; background:#161618;">
+            <div style="font-family:'Barlow Condensed', sans-serif; font-size:13px; letter-spacing:0.22em; color:#D91E2A;">{{ o.num }}</div>
+            <div style="font-family:Anton, sans-serif; font-size:28px; margin:14px 0 12px; text-transform:uppercase;">{{ o.title }}</div>
+            <p style="color:#9A9AA0; font-size:15px; line-height:1.6; margin:0 0 20px;">{{ o.text }}</p>
+            <span style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.18em; font-size:13px;">{{ o.link }} →</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="padding:0 32px 96px; max-width:1280px; margin:0 auto;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:0; border:1px solid rgba(255,255,255,0.09); border-radius:3px; overflow:hidden;">
+        <img src="uploads/Michal%20grupa.png" alt="Trening grupowy" style="width:100%; height:100%; min-height:360px; object-fit:cover; filter:grayscale(0.2);" />
+        <div style="padding:56px 44px; background:#121214; display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:16px;">{{ t.teamKicker }}</div>
+          <h3 style="font-family:Anton, sans-serif; font-size:38px; margin:0 0 18px; text-transform:uppercase; line-height:1.05;">{{ t.teamTitle }}</h3>
+          <p style="color:#9A9AA0; font-size:16px; line-height:1.65; margin:0 0 28px;">{{ t.teamText }}</p>
+          <a href="#" onClick="{{ goAbout }}" style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.18em; font-size:14px; color:#D91E2A;">{{ t.teamLink }} →</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ══ O MNIE ══ -->
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1280px; margin:0 auto; padding:72px 32px 96px; animation:crtFadeUp 0.4s ease both;">
+    <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:14px;">{{ t.aboutKicker }}</div>
+    <h1 style="font-family:Anton, sans-serif; font-size:clamp(40px,6vw,80px); margin:0 0 56px; text-transform:uppercase; line-height:0.95;">MICHAŁ<br />CEWIŃSKI</h1>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:40px; align-items:start;">
+      <img src="uploads/Michal.webp" alt="Michał Cewiński" style="width:100%; border-radius:3px; object-fit:cover; filter:grayscale(0.25); border:1px solid rgba(255,255,255,0.09);" />
+      <div>
+        <p style="font-size:21px; line-height:1.6; color:#F2F2F0; margin:0 0 26px;">{{ t.aboutLead }}</p>
+        <p style="font-size:16px; line-height:1.75; color:#9A9AA0; margin:0 0 20px;">{{ t.aboutP1 }}</p>
+        <p style="font-size:16px; line-height:1.75; color:#9A9AA0; margin:0 0 20px;">{{ t.aboutP2 }}</p>
+        <p style="font-size:16px; line-height:1.75; color:#9A9AA0; margin:0 0 36px;">{{ t.aboutP3 }}</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.09);">
+          <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+            <div style="background:#121214; padding:24px 22px;">
+              <div style="font-family:Anton, sans-serif; font-size:26px; color:#fff;">{{ f.big }}</div>
+              <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.18em; font-size:12px; color:#8A8A90; margin-top:8px;">{{ f.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:64px; padding:44px 40px; border-left:3px solid #D91E2A; background:#121214;">
+      <div style="font-family:Anton, sans-serif; font-size:clamp(24px,3vw,40px); text-transform:uppercase; line-height:1.15;">{{ t.aboutQuote }}</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isTraining }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1280px; margin:0 auto; padding:64px 32px 0;">
+    <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.09); padding-bottom:0;">
+      <sc-for list="{{ trainTabs }}" as="tb" hint-placeholder-count="2">
+        <button onClick="{{ tb.pick }}" style="{{ tb.style }}">{{ tb.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ══ TRENINGI PERSONALNE ══ -->
+  <sc-if value="{{ isPersonal }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1280px; margin:0 auto; padding:44px 32px 96px; animation:crtFadeUp 0.4s ease both;">
+    <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:14px;">{{ t.perKicker }}</div>
+    <h1 style="font-family:Anton, sans-serif; font-size:clamp(38px,5.4vw,72px); margin:0 0 18px; text-transform:uppercase; line-height:0.98;">{{ t.perTitle }}</h1>
+    <p style="max-width:640px; font-size:17px; line-height:1.65; color:#9A9AA0; margin:0 0 48px;">{{ t.perSub }}</p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:18px; margin-bottom:64px;">
+      <sc-for list="{{ prices }}" as="p" hint-placeholder-count="3">
+        <div style="{{ p.cardStyle }}">
+          <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.22em; font-size:12px; color:#D91E2A;">{{ p.tag }}</div>
+          <div style="font-family:Anton, sans-serif; font-size:22px; margin:12px 0 18px; text-transform:uppercase;">{{ p.name }}</div>
+          <div style="display:flex; align-items:baseline; gap:8px;">
+            <span style="font-family:Anton, sans-serif; font-size:48px; line-height:1;">{{ p.price }}</span>
+            <span style="font-family:'Barlow Condensed', sans-serif; font-size:15px; color:#8A8A90; letter-spacing:0.1em;">{{ p.unit }}</span>
+          </div>
+          <div style="font-size:14px; color:#8A8A90; margin-top:14px;">{{ p.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
+      <h2 style="font-family:Anton, sans-serif; font-size:32px; margin:0; text-transform:uppercase;">{{ t.calTitle }}</h2>
+      <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.16em; font-size:13px; color:#8A8A90;">CROSSFIT MGW · UL. NOWOGRODZKA 31, WARSZAWA</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px,1fr)); gap:24px; align-items:start;">
+      <div style="min-width:0; border:1px solid rgba(255,255,255,0.09); background:#121214; border-radius:3px; padding:24px;">
+        <div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.09);">
+          <sc-for list="{{ days }}" as="d" hint-placeholder-count="10">
+            <button onClick="{{ d.pick }}" style="{{ d.style }}">
+              <span style="display:block; font-size:11px; letter-spacing:0.16em; opacity:0.65;">{{ d.dow }}</span>
+              <span style="display:block; font-family:Anton, sans-serif; font-size:22px; margin-top:5px;">{{ d.num }}</span>
+              <span style="display:block; font-size:10px; letter-spacing:0.14em; opacity:0.55; margin-top:3px;">{{ d.mon }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(128px,1fr)); gap:10px; padding-top:22px;">
+          <sc-for list="{{ slots }}" as="s" hint-placeholder-count="6">
+            <button onClick="{{ s.pick }}" style="{{ s.style }}">
+              <span style="font-family:Anton, sans-serif; font-size:19px;">{{ s.time }}</span>
+              <span style="display:block; font-family:'Barlow Condensed', sans-serif; font-size:11px; letter-spacing:0.16em; margin-top:5px; opacity:0.7;">{{ s.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="min-width:0; border:1px solid rgba(255,255,255,0.09); background:#121214; border-radius:3px; padding:28px; position:sticky; top:96px;">
+        <sc-if value="{{ booked }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="width:44px; height:44px; border-radius:50%; background:#D91E2A; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:18px;">✓</div>
+            <div style="font-family:Anton, sans-serif; font-size:26px; text-transform:uppercase; margin-bottom:12px;">{{ t.bookedTitle }}</div>
+            <p style="color:#9A9AA0; font-size:15px; line-height:1.6; margin:0 0 8px;">{{ t.bookedText }}</p>
+            <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.14em; font-size:15px; color:#fff; margin-bottom:24px;">{{ chosenLabel }}</div>
+            <button onClick="{{ resetBooking }}" style="width:100%; padding:14px; background:transparent; color:#F2F2F0; border:1px solid rgba(255,255,255,0.24); border-radius:2px; font-family:'Barlow Condensed', sans-serif; letter-spacing:0.16em; font-size:14px; cursor:pointer;">{{ t.bookAgain }}</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notBooked }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <div style="font-family:Anton, sans-serif; font-size:22px; text-transform:uppercase; margin-bottom:6px;">{{ t.formTitle }}</div>
+            <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.14em; font-size:14px; color:#D91E2A; margin-bottom:22px;">{{ chosenLabel }}</div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <input value="{{ form.first }}" onChange="{{ onFirst }}" placeholder="{{ t.fFirst }}" style="width:100%; padding:13px 14px; background:#0B0B0C; border:1px solid rgba(255,255,255,0.14); border-radius:2px; color:#F2F2F0; font-size:15px; outline:none;" style-focus="border-color:#D91E2A;" />
+              <input value="{{ form.last }}" onChange="{{ onLast }}" placeholder="{{ t.fLast }}" style="width:100%; padding:13px 14px; background:#0B0B0C; border:1px solid rgba(255,255,255,0.14); border-radius:2px; color:#F2F2F0; font-size:15px; outline:none;" style-focus="border-color:#D91E2A;" />
+              <input value="{{ form.phone }}" onChange="{{ onPhone }}" placeholder="{{ t.fPhone }}" style="width:100%; padding:13px 14px; background:#0B0B0C; border:1px solid rgba(255,255,255,0.14); border-radius:2px; color:#F2F2F0; font-size:15px; outline:none;" style-focus="border-color:#D91E2A;" />
+              <input value="{{ form.email }}" onChange="{{ onEmail }}" placeholder="{{ t.fEmail }}" style="width:100%; padding:13px 14px; background:#0B0B0C; border:1px solid rgba(255,255,255,0.14); border-radius:2px; color:#F2F2F0; font-size:15px; outline:none;" style-focus="border-color:#D91E2A;" />
+              <select value="{{ form.pkg }}" onChange="{{ onPkg }}" style="width:100%; padding:13px 14px; background:#0B0B0C; border:1px solid rgba(255,255,255,0.14); border-radius:2px; color:#F2F2F0; font-size:15px; outline:none;">
+                <sc-for list="{{ pkgOptions }}" as="p" hint-placeholder-count="3">
+                  <option value="{{ p.value }}" style="background:#0B0B0C;">{{ p.label }}</option>
+                </sc-for>
+              </select>
+              <textarea value="{{ form.note }}" onChange="{{ onNote }}" placeholder="{{ t.fNote }}" rows="3" style="width:100%; padding:13px 14px; background:#0B0B0C; border:1px solid rgba(255,255,255,0.14); border-radius:2px; color:#F2F2F0; font-size:15px; outline:none; resize:vertical;" style-focus="border-color:#D91E2A;"></textarea>
+              <button onClick="{{ submitBooking }}" style="{{ submitStyle }}">{{ t.fSubmit }}</button>
+              <div style="font-size:12px; color:#6E6E75; line-height:1.5;">{{ t.formHint }}</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ══ TRENINGI GRUPOWE ══ -->
+  <sc-if value="{{ isGroup }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1280px; margin:0 auto; padding:44px 32px 96px; animation:crtFadeUp 0.4s ease both;">
+    <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:14px;">{{ t.grpKicker }}</div>
+    <h1 style="font-family:Anton, sans-serif; font-size:clamp(38px,5.4vw,72px); margin:0 0 18px; text-transform:uppercase; line-height:0.98;">{{ t.grpTitle }}</h1>
+    <p style="max-width:660px; font-size:17px; line-height:1.65; color:#9A9AA0; margin:0 0 48px;">{{ t.grpSub }}</p>
+
+    <img src="uploads/Michal%20grupa.png" alt="" style="width:100%; height:340px; object-fit:cover; object-position:50% 40%; border-radius:3px; border:1px solid rgba(255,255,255,0.09); margin-bottom:52px; filter:grayscale(0.2);" />
+
+    <h2 style="font-family:Anton, sans-serif; font-size:30px; margin:0 0 20px; text-transform:uppercase;">{{ t.grpSchedule }}</h2>
+    <div style="border:1px solid rgba(255,255,255,0.09); border-radius:3px; overflow:hidden; margin-bottom:56px;">
+      <sc-for list="{{ schedule }}" as="r" hint-placeholder-count="4">
+        <div style="display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center; padding:26px 28px; background:#121214; border-bottom:1px solid rgba(255,255,255,0.07);">
+          <div>
+            <div style="font-family:Anton, sans-serif; font-size:24px; text-transform:uppercase;">{{ r.type }}</div>
+            <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.14em; font-size:15px; color:#8A8A90; margin-top:6px;">{{ r.day }}</div>
+          </div>
+          <div style="font-family:Anton, sans-serif; font-size:28px; color:#D91E2A;">{{ r.time }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:18px; margin-bottom:52px;">
+      <sc-for list="{{ grpPoints }}" as="g" hint-placeholder-count="3">
+        <div style="padding:28px 26px; background:#121214; border:1px solid rgba(255,255,255,0.09); border-radius:3px;">
+          <div style="font-family:Anton, sans-serif; font-size:20px; text-transform:uppercase; margin-bottom:10px;">{{ g.title }}</div>
+          <p style="margin:0; color:#9A9AA0; font-size:15px; line-height:1.6;">{{ g.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:36px 34px; background:#D91E2A; border-radius:3px;">
+      <div style="font-family:Anton, sans-serif; font-size:clamp(22px,2.6vw,34px); text-transform:uppercase; max-width:640px; line-height:1.1;">{{ t.grpCta }}</div>
+      <a href="tel:+48884370844" style="padding:16px 28px; background:#0B0B0C; color:#fff; font-family:'Barlow Condensed', sans-serif; letter-spacing:0.16em; font-size:15px; border-radius:2px;">884 370 844</a>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ══ MERCH ══ -->
+  <sc-if value="{{ isMerch }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1280px; margin:0 auto; padding:72px 32px 96px; animation:crtFadeUp 0.4s ease both;">
+    <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:14px;">{{ t.merchKicker }}</div>
+    <h1 style="font-family:Anton, sans-serif; font-size:clamp(38px,5.4vw,72px); margin:0 0 48px; text-transform:uppercase; line-height:0.98;">{{ t.merchTitle }}</h1>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:32px; align-items:start;">
+      <div style="background:#121214; border:1px solid rgba(255,255,255,0.09); border-radius:3px; overflow:hidden;">
+        <img src="uploads/merch.png" alt="Rashguard Cewin Rumble Team" style="width:100%; display:block; object-fit:cover;" />
+        <div style="padding:22px 26px; display:flex; gap:26px; border-top:1px solid rgba(255,255,255,0.09);">
+          <sc-for list="{{ merchSpecs }}" as="m" hint-placeholder-count="3">
+            <div>
+              <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.18em; font-size:11px; color:#8A8A90;">{{ m.k }}</div>
+              <div style="font-size:15px; margin-top:5px;">{{ m.v }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="background:#121214; border:1px solid rgba(255,255,255,0.09); border-radius:3px; padding:32px;">
+        <div style="font-family:Anton, sans-serif; font-size:28px; text-transform:uppercase; line-height:1.1;">RASHGARD<br />CEWIN RUMBLE TEAM</div>
+        <div style="display:flex; align-items:baseline; gap:10px; margin:18px 0 24px;">
+          <span style="font-family:Anton, sans-serif; font-size:42px; color:#D91E2A;">199</span>
+          <span style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.16em; font-size:16px; color:#8A8A90;">PLN</span>
+        </div>
+        <p style="color:#9A9AA0; font-size:15px; line-height:1.65; margin:0 0 26px;">{{ t.merchDesc }}</p>
+        <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.2em; font-size:12px; color:#8A8A90; margin-bottom:10px;">{{ t.mSizes }}</div>
+        <div style="display:flex; gap:8px; margin-bottom:28px; flex-wrap:wrap;">
+          <sc-for list="{{ sizeLabels }}" as="s" hint-placeholder-count="5">
+            <span style="min-width:52px; text-align:center; padding:11px 12px; border:1px solid rgba(255,255,255,0.14); border-radius:2px; font-family:'Barlow Condensed', sans-serif; font-weight:700; letter-spacing:0.1em; font-size:14px;">{{ s }}</span>
+          </sc-for>
+        </div>
+        <a href="https://ig.me/m/cewinrumbleteam" target="_blank" style="display:block; text-align:center; padding:17px; background:#D91E2A; color:#fff; font-family:'Barlow Condensed', sans-serif; font-weight:700; letter-spacing:0.16em; font-size:15px; border-radius:2px;" style-hover="background:#F02334;">{{ t.mDm }}</a>
+        <p style="font-size:13px; color:#6E6E75; line-height:1.6; margin:16px 0 0;">{{ t.mDmHint }}</p>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ══ GALERIA ══ -->
+  <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1280px; margin:0 auto; padding:72px 32px 96px; animation:crtFadeUp 0.4s ease both;">
+    <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:14px;">{{ t.galKicker }}</div>
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:44px;">
+      <h1 style="font-family:Anton, sans-serif; font-size:clamp(38px,5.4vw,72px); margin:0; text-transform:uppercase; line-height:0.98;">{{ t.galTitle }}</h1>
+      <a href="https://www.instagram.com/cewinrumbleteam/" target="_blank" style="padding:14px 24px; border:1px solid rgba(255,255,255,0.3); font-family:'Barlow Condensed', sans-serif; letter-spacing:0.16em; font-size:14px; border-radius:2px;" style-hover="border-color:#D91E2A;">@CEWINRUMBLETEAM →</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); grid-auto-rows:220px; gap:14px;">
+      <div style="grid-column:span 2; grid-row:span 2; overflow:hidden; border-radius:3px;">
+        <img src="uploads/Michal%20grupa.png" alt="" style="width:100%; height:100%; object-fit:cover; filter:grayscale(0.2);" />
+      </div>
+      <div style="overflow:hidden; border-radius:3px;"><img src="uploads/Michal.webp" alt="" style="width:100%; height:100%; object-fit:cover; object-position:50% 25%; filter:grayscale(0.2);" /></div>
+      <div style="overflow:hidden; border-radius:3px;"><img src="uploads/merch.png" alt="" style="width:100%; height:100%; object-fit:cover;" /></div>
+      <sc-for list="{{ galleryPlaceholders }}" as="g" hint-placeholder-count="5">
+        <div style="display:flex; align-items:center; justify-content:center; border:1px dashed rgba(255,255,255,0.16); border-radius:3px; background:repeating-linear-gradient(135deg, #101012 0 10px, #141417 10px 20px);">
+          <span style="font-family:ui-monospace, Menlo, monospace; font-size:11px; letter-spacing:0.1em; color:#6E6E75; text-align:center; padding:0 14px;">{{ g }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ══ KONTAKT ══ -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1280px; margin:0 auto; padding:72px 32px 96px; animation:crtFadeUp 0.4s ease both;">
+    <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:14px;">{{ t.ctKicker }}</div>
+    <h1 style="font-family:Anton, sans-serif; font-size:clamp(38px,5.4vw,72px); margin:0 0 48px; text-transform:uppercase; line-height:0.98;">{{ t.ctTitle }}</h1>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:1px; background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.09); margin-bottom:56px;">
+      <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="4">
+        <a href="{{ c.href }}" target="_blank" style="display:block; background:#121214; padding:32px 30px;" style-hover="background:#161618;">
+          <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.2em; font-size:12px; color:#8A8A90;">{{ c.k }}</div>
+          <div style="font-family:Anton, sans-serif; font-size:24px; margin-top:10px;">{{ c.v }}</div>
+        </a>
+      </sc-for>
+    </div>
+
+    <div style="padding:44px 40px; background:#121214; border:1px solid rgba(255,255,255,0.09); border-radius:3px;">
+      <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:14px;">{{ t.catKicker }}</div>
+      <h2 style="font-family:Anton, sans-serif; font-size:34px; margin:0 0 14px; text-transform:uppercase;">{{ t.catTitle }}</h2>
+      <p style="max-width:620px; color:#9A9AA0; font-size:16px; line-height:1.65; margin:0 0 26px;">{{ t.catText }}</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+        <div style="padding:14px 22px; border:1px dashed #D91E2A; border-radius:2px; font-family:Anton, sans-serif; font-size:20px; letter-spacing:0.06em;">CEWIN12</div>
+        <div style="padding:14px 22px; border:1px dashed #D91E2A; border-radius:2px; font-family:Anton, sans-serif; font-size:20px; letter-spacing:0.06em;">CEWIN8</div>
+        <a href="https://linktr.ee/mojcatering" target="_blank" style="padding:15px 26px; background:#D91E2A; color:#fff; font-family:'Barlow Condensed', sans-serif; letter-spacing:0.16em; font-size:14px; border-radius:2px;" style-hover="background:#F02334;">{{ t.catCta }} →</a>
+        <a href="https://www.instagram.com/mojcateringcompl/" target="_blank" style="padding:15px 26px; border:1px solid rgba(255,255,255,0.28); font-family:'Barlow Condensed', sans-serif; letter-spacing:0.16em; font-size:14px; border-radius:2px;" style-hover="border-color:#fff;">@MOJCATERINGCOMPL</a>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <footer style="border-top:1px solid rgba(255,255,255,0.09); padding:52px 32px 40px; background:#0B0B0C;">
+    <div style="max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap; align-items:flex-start;">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <img src="uploads/539444536_17921984790103977_878909258803261491_n.jpg" alt="" style="width:56px; height:56px; border-radius:50%; object-fit:cover; border:1px solid rgba(255,255,255,0.14);" />
+        <div>
+          <div style="font-family:Anton, sans-serif; font-size:18px; letter-spacing:0.05em;">CEWIN <span style="color:#D91E2A;">★</span> RUMBLE <span style="color:#D91E2A;">★</span> TEAM</div>
+          <div style="font-family:'Barlow Condensed', sans-serif; font-size:12px; letter-spacing:0.22em; color:#6E6E75; margin-top:6px;">MICHAŁ CEWIŃSKI · WARSZAWA</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:36px; flex-wrap:wrap; font-family:'Barlow Condensed', sans-serif; letter-spacing:0.14em; font-size:14px;">
+        <a href="tel:+48884370844">884 370 844</a>
+        <a href="mailto:cewinrumbleart@op.pl">CEWINRUMBLEART@OP.PL</a>
+        <a href="https://www.instagram.com/cewinrumbleteam/" target="_blank">INSTAGRAM</a>
+      </div>
+    </div>
+    <div style="max-width:1280px; margin:32px auto 0; font-size:12px; color:#5C5C63;">© 2026 Cewin Rumble Team</div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const PL = {
+  cta: "ZAPISZ SIĘ",
+  ctaBook: "ZAREZERWUJ TRENING",
+  ctaGroup: "TRENINGI GRUPOWE",
+  nav: { start:"Start", about:"O mnie", training:"Zajęcia", merch:"Merch", gallery:"Galeria", contact:"Kontakt" },
+  tabPersonal:"PERSONALNE", tabGroup:"GRUPOWE",
+  mSizes:"DOSTĘPNE ROZMIARY",
+  mDm:"NAPISZ PO RASHGARD",
+  mDmHint:"Zamówienia idą przez DM na Instagramie — napisz rozmiar, dogadamy płatność i wysyłkę.",
+  heroKicker: "BOKS · K1 · MUAY THAI · WARSZAWA",
+  heroLine1: "NIE OBIECUJĘ CUDÓW.",
+  heroLine2: "OBIECUJĘ EFEKTY.",
+  heroSub: "Treningi bokserskie i kickboxerskie dla tych, którzy chcą się nauczyć bić technicznie — bez ściemy, bez skrótów, w kontrolowanych warunkach.",
+  stats: [
+    { big:"8+", label:"LAT DOŚWIADCZENIA" },
+    { big:"18-0-7", label:"REKORD W RINGU" },
+    { big:"1:1", label:"INDYWIDUALNE PODEJŚCIE" },
+    { big:"MGW", label:"CROSSFIT MGW, NOWOGRODZKA 31" }
+  ],
+  offerKicker: "OD CZEGO ZACZYNASZ",
+  offerTitle: "Wybierz swoją drogę",
+  offers: [
+    { num:"01", title:"Treningi personalne", text:"Ty i ja. Technika, kondycja, praca nad błędami. Kalendarz online — wybierasz termin i przychodzisz.", link:"REZERWUJ TERMIN", page:"personal" },
+    { num:"02", title:"Treningi grupowe", text:"Sekcja bokserska i K1 w CrossFit MGW. Rozgrzewka, technika, praca na tarczach, sparingi kontrolowane.", link:"ZOBACZ GRAFIK", page:"group" }
+  ],
+  teamKicker: "CEWIN RUMBLE TEAM",
+  teamTitle: "To nie sport. To styl życia.",
+  teamText: "Ekipa, która trenuje razem od kilku lat. Od pierwszego uderzenia w worek po sparingi i treningi charytatywne. Wchodzisz na salę jako nowy — wychodzisz jako część teamu.",
+  teamLink: "POZNAJ TRENERA",
+
+  aboutKicker: "TRENER",
+  aboutLead: "Od ponad ośmiu lat w sportach walki. Boks i kickboxing K1 to moja pasja — i to, czym zarażam innych.",
+  aboutP1: "Instruktor specjalizujący się w treningach bokserskich oraz ogólnorozwojowych. Na zajęciach łączę elementy techniczne z intensywnym wysiłkiem — sporty walki to najkrótsza droga do lepszej kondycji, sylwetki i pewności siebie.",
+  aboutP2: "Zawsze stawiam na technikę, bezpieczeństwo i indywidualne podejście do każdej osoby na sali. Dobrze poprowadzony trening to nie tylko wysiłek fizyczny, ale też narzędzie do budowania charakteru i redukcji stresu.",
+  aboutP3: "Poza salą interesuję się psychologią sportu i rozwojem mentalnym. Poza treningami organizuję treningi charytatywne — bo team to coś więcej niż sala.",
+  facts: [
+    { big:"Mistrz Polski", label:"TYTUŁ" },
+    { big:"18-0-7", label:"REKORD" },
+    { big:"8 lat", label:"DOŚWIADCZENIE" },
+    { big:"PL / EN", label:"JĘZYKI TRENINGU" }
+  ],
+  aboutQuote: "„Dobrze poprowadzony trening buduje charakter, nie tylko formę.”",
+
+  perKicker: "1 NA 1",
+  perTitle: "Treningi personalne",
+  perSub: "Pełna uwaga na Tobie: technika, praca nóg, kondycja, plan na kolejne tygodnie. Wybierz termin w kalendarzu i zarezerwuj miejsce.",
+  prices: [
+    { tag:"POJEDYNCZY", name:"Trening 1:1", price:"80", unit:"PLN / 60 MIN", note:"Bez zobowiązań. Sprzęt na miejscu." },
+    { tag:"NAJCZĘŚCIEJ WYBIERANY", name:"Pakiet 5 treningów", price:"375", unit:"PLN · 75/TRENING", note:"Ważny 8 tygodni." },
+    { tag:"PEŁNY PROGRAM", name:"Pakiet 10 treningów", price:"700", unit:"PLN · 70/TRENING", note:"Plan treningowy + konsultacja." }
+  ],
+  calTitle: "Wolne terminy",
+  formTitle: "Twoje dane",
+  pickFirst: "Wybierz termin w kalendarzu",
+  fFirst:"Imię", fLast:"Nazwisko", fPhone:"Telefon", fEmail:"E-mail", fNote:"Uwagi (doświadczenie, cel)",
+  fSubmit:"ZAREZERWUJ",
+  formHint:"Demo — dane nie są nigdzie wysyłane. Po podpięciu systemu rezerwacja trafi na maila trenera.",
+  pkgOptions: ["Trening pojedynczy — 80 PLN","Pakiet 5 treningów — 375 PLN","Pakiet 10 treningów — 700 PLN"],
+  bookedTitle:"Termin zarezerwowany",
+  bookedText:"Do zobaczenia na sali. Potwierdzenie dostaniesz SMS-em.",
+  bookAgain:"ZAREZERWUJ KOLEJNY",
+  taken:"ZAJĘTE", free:"WOLNE",
+
+  grpKicker:"SEKCJA",
+  grpTitle:"Treningi grupowe",
+  grpSub:"Sekcja bokserska i K1 w CrossFit MGW, ul. Nowogrodzka 31 w Warszawie. Grupy mieszane — jest miejsce zarówno dla kogoś, kto nigdy nie uderzył w worek, jak i dla osób sparingujących.",
+  grpSchedule:"Grafik zajęć",
+  schedule: [
+    { day:"Poniedziałek, Środa", type:"BOKS", desc:"", time:"20:00", level:"" },
+    { day:"Wtorek, Czwartek", type:"KICKBOXING / K1", desc:"", time:"19:30", level:"" }
+  ],
+  grpPoints: [
+    { title:"Pierwszy raz?", text:"Przychodzisz w wygodnym stroju. Rękawice i sprzęt dostaniesz na miejscu. Nikt nie rzuci Cię na głęboką wodę." },
+    { title:"Sparingi", text:"Zawsze kontrolowane, dobrane pod poziom, zawsze w ochraniaczach. Sparing to nauka, nie wojna." },
+    { title:"Rozwój", text:"Regularna praca nad techniką, feedback po każdym treningu i realny plan na kolejne miesiące." }
+  ],
+  grpCta:"Chcesz dołączyć do sekcji? Napisz albo zadzwoń — pierwszy trening ustalamy indywidualnie.",
+
+  merchKicker:"CEWIN RUMBLE TEAM",
+  merchTitle:"Merch",
+  merchDesc:"Rashgard z pełnym nadrukiem teamu. Oddychający materiał, płaskie szwy, krój dopasowany do sportów walki. Ten sam, w którym trenuje ekipa.",
+  merchSpecs: [ {k:"MATERIAŁ", v:"Poliester / elastan"}, {k:"NADRUK", v:"Sublimacja, pełen plecy"}, {k:"WYSYŁKA", v:"2–5 dni roboczych"} ],
+  mSize:"ROZMIAR", mPay:"PŁATNOŚĆ", mBuy:"ZAMAWIAM I PŁACĘ",
+  fFullName:"Imię i nazwisko", fAddr:"Adres dostawy",
+  payMethods:["BLIK","Karta","Przelew"],
+  payHint:"Demo płatności — zamówienie nie jest realizowane. Po podpięciu Stripe płatność ruszy na żywo.",
+  orderedTitle:"Zamówienie przyjęte",
+  orderedText:"Potwierdzenie wysłaliśmy na maila. Rashgard rusza do Ciebie w ciągu 2–5 dni roboczych.",
+  orderAgain:"ZAMÓW KOLEJNY",
+
+  galKicker:"MEDIA",
+  galTitle:"Galeria",
+  galleryPlaceholders:["zdjęcie z treningu","reel — praca na worku","sparingi","trening charytatywny","team photo"],
+
+  evKicker:"RAZEM",
+  evTitle:"Wydarzenia",
+  evSub:"Treningi charytatywne, otwarte sesje, wyjazdy. Wszystko, w czym możesz wziąć udział razem z teamem.",
+  evEmptyTitle:"Na razie brak zaplanowanych wydarzeń",
+  evEmptyText:"Nowe terminy ogłaszamy najpierw na Instagramie. Obserwuj, żeby nie przegapić.",
+  evPast:"Było u nas",
+  pastEvents: [
+    { date:"LISTOPAD 2025", title:"Trening charytatywny dla Czarka Znamca", text:"Wspólna sesja ze zbiórką — udało się zebrać 1100 PLN. Dzięki: CrossFit MGW, Kolonia Ochota, Moonlight Photo." },
+    { date:"SIERPIEŃ 2025", title:"Trening charytatywny dla Krzysztofa Wegnera", text:"Pola Mokotowskie, otwarty trening ze zbiórką na leczenie. Przyszli wszyscy, na których liczyliśmy." }
+  ],
+
+  ctKicker:"NAPISZ",
+  ctTitle:"Kontakt",
+  contacts: [
+    { k:"TELEFON", v:"884 370 844", href:"tel:+48884370844" },
+    { k:"E-MAIL", v:"cewinrumbleart@op.pl", href:"mailto:cewinrumbleart@op.pl" },
+    { k:"INSTAGRAM", v:"@cewinrumbleteam", href:"https://www.instagram.com/cewinrumbleteam/" },
+    { k:"SALA", v:"CrossFit MGW, Nowogrodzka 31", href:"https://maps.google.com/?q=Nowogrodzka+31+Warszawa" }
+  ],
+  catKicker:"WSPÓŁPRACA",
+  catTitle:"Catering sportowy",
+  catText:"Trening to połowa roboty — reszta dzieje się w kuchni. Mój Catering ogarnia dietę pod trening, a Ty korzystasz z kodów zniżkowych teamu.",
+  catCta:"ZOBACZ OFERTĘ"
+};
+
+const EN = {
+  cta: "BOOK NOW",
+  ctaBook: "BOOK A SESSION",
+  ctaGroup: "GROUP CLASSES",
+  nav: { start:"Home", about:"About", training:"Training", merch:"Merch", gallery:"Gallery", contact:"Contact" },
+  tabPersonal:"PERSONAL", tabGroup:"GROUP",
+  mSizes:"AVAILABLE SIZES",
+  mDm:"DM FOR A RASHGUARD",
+  mDmHint:"Orders go through Instagram DM — send your size, we'll sort payment and shipping there.",
+  heroKicker: "BOXING · K1 · MUAY THAI · WARSAW",
+  heroLine1: "I DON'T PROMISE MIRACLES.",
+  heroLine2: "I PROMISE RESULTS.",
+  heroSub: "Boxing and kickboxing training for people who want to learn to hit properly — no shortcuts, no nonsense, in controlled conditions.",
+  stats: [
+    { big:"8+", label:"YEARS OF EXPERIENCE" },
+    { big:"18-0-7", label:"RING RECORD" },
+    { big:"1:1", label:"INDIVIDUAL APPROACH" },
+    { big:"MGW", label:"CROSSFIT MGW, NOWOGRODZKA 31" }
+  ],
+  offerKicker: "WHERE YOU START",
+  offerTitle: "Pick your path",
+  offers: [
+    { num:"01", title:"Personal training", text:"Just you and me. Technique, conditioning, fixing your mistakes. Online calendar — pick a slot and show up.", link:"BOOK A SLOT", page:"personal" },
+    { num:"02", title:"Group classes", text:"Boxing and K1 section at CrossFit MGW. Warm-up, technique, pad work, controlled sparring.", link:"SEE SCHEDULE", page:"group" }
+  ],
+  teamKicker: "CEWIN RUMBLE TEAM",
+  teamTitle: "Not a sport. A way of life.",
+  teamText: "A crew that has trained together for years. From your first punch on the bag to sparring and charity sessions. You walk in as a stranger — you walk out as part of the team.",
+  teamLink: "MEET THE COACH",
+
+  aboutKicker: "COACH",
+  aboutLead: "Over eight years in combat sports. Boxing and K1 kickboxing are my passion — and what I pass on to others.",
+  aboutP1: "Instructor specialising in boxing and general conditioning training. In my classes I combine technical work with real intensity — combat sports are the shortest route to better conditioning, a better physique and real confidence.",
+  aboutP2: "Technique, safety and an individual approach to every person in the room come first. A well-run session is not just physical effort — it builds character and burns off stress.",
+  aboutP3: "Outside the gym I'm into sports psychology and mental development. Beyond regular training I run charity sessions — the team is more than the gym floor.",
+  facts: [
+    { big:"Polish Champion", label:"TITLE" },
+    { big:"18-0-7", label:"RECORD" },
+    { big:"8 years", label:"EXPERIENCE" },
+    { big:"PL / EN", label:"COACHING LANGUAGES" }
+  ],
+  aboutQuote: "“A well-run session builds character, not just fitness.”",
+
+  perKicker: "1 ON 1",
+  perTitle: "Personal training",
+  perSub: "Full attention on you: technique, footwork, conditioning, a plan for the weeks ahead. Pick a slot in the calendar and book it.",
+  prices: [
+    { tag:"SINGLE", name:"1:1 session", price:"80", unit:"PLN / 60 MIN", note:"No commitment. Gear provided." },
+    { tag:"MOST POPULAR", name:"5-session pack", price:"375", unit:"PLN · 75/SESSION", note:"Valid for 8 weeks." },
+    { tag:"FULL PROGRAM", name:"10-session pack", price:"700", unit:"PLN · 70/SESSION", note:"Training plan + consultation." }
+  ],
+  calTitle: "Available slots",
+  formTitle: "Your details",
+  pickFirst: "Pick a slot in the calendar",
+  fFirst:"First name", fLast:"Last name", fPhone:"Phone", fEmail:"E-mail", fNote:"Notes (experience, goal)",
+  fSubmit:"BOOK IT",
+  formHint:"Demo — nothing is sent anywhere. Once the booking system is connected, requests go straight to the coach.",
+  pkgOptions: ["Single session — 80 PLN","5-session pack — 375 PLN","10-session pack — 700 PLN"],
+  bookedTitle:"Slot booked",
+  bookedText:"See you at the gym. You'll get an SMS confirmation.",
+  bookAgain:"BOOK ANOTHER",
+  taken:"TAKEN", free:"FREE",
+
+  grpKicker:"THE SECTION",
+  grpTitle:"Group classes",
+  grpSub:"Boxing and K1 section at CrossFit MGW, Nowogrodzka 31 in Warsaw. Mixed groups — room for someone who has never hit a bag and for people who already spar.",
+  grpSchedule:"Class schedule",
+  schedule: [
+    { day:"Monday, Wednesday", type:"BOXING", desc:"", time:"20:00", level:"" },
+    { day:"Tuesday, Thursday", type:"KICKBOXING / K1", desc:"", time:"19:30", level:"" }
+  ],
+  grpPoints: [
+    { title:"First time?", text:"Come in comfortable clothes. Gloves and gear are here. Nobody throws you in the deep end." },
+    { title:"Sparring", text:"Always controlled, always matched to your level, always in protective gear. Sparring is learning, not war." },
+    { title:"Progress", text:"Consistent technical work, feedback after every session and a real plan for the months ahead." }
+  ],
+  grpCta:"Want to join the section? Write or call — we set up your first session personally.",
+
+  merchKicker:"CEWIN RUMBLE TEAM",
+  merchTitle:"Merch",
+  merchDesc:"Full-print team rashguard. Breathable fabric, flat seams, cut made for combat sports. The same one the crew trains in.",
+  merchSpecs: [ {k:"FABRIC", v:"Polyester / elastane"}, {k:"PRINT", v:"Sublimation, full back"}, {k:"SHIPPING", v:"2–5 business days"} ],
+  mSize:"SIZE", mPay:"PAYMENT", mBuy:"ORDER & PAY",
+  fFullName:"Full name", fAddr:"Delivery address",
+  payMethods:["BLIK","Card","Transfer"],
+  payHint:"Demo checkout — no order is processed. Once Stripe is connected, payments go live.",
+  orderedTitle:"Order received",
+  orderedText:"Confirmation is on its way to your inbox. Your rashguard ships within 2–5 business days.",
+  orderAgain:"ORDER ANOTHER",
+
+  galKicker:"MEDIA",
+  galTitle:"Gallery",
+  galleryPlaceholders:["training photo","reel — bag work","sparring","charity session","team photo"],
+
+  evKicker:"TOGETHER",
+  evTitle:"Events",
+  evSub:"Charity sessions, open trainings, trips. Everything you can take part in alongside the team.",
+  evEmptyTitle:"No events scheduled right now",
+  evEmptyText:"New dates are announced on Instagram first. Follow so you don't miss them.",
+  evPast:"What we've done",
+  pastEvents: [
+    { date:"NOVEMBER 2025", title:"Charity session for Czarek Znamiec", text:"An open session with a fundraiser — 1100 PLN raised. Thanks to CrossFit MGW, Kolonia Ochota and Moonlight Photo." },
+    { date:"AUGUST 2025", title:"Charity session for Krzysztof Wegner", text:"Pola Mokotowskie, an open training with a fundraiser for treatment. Everyone we counted on showed up." }
+  ],
+
+  ctKicker:"GET IN TOUCH",
+  ctTitle:"Contact",
+  contacts: [
+    { k:"PHONE", v:"884 370 844", href:"tel:+48884370844" },
+    { k:"E-MAIL", v:"cewinrumbleart@op.pl", href:"mailto:cewinrumbleart@op.pl" },
+    { k:"INSTAGRAM", v:"@cewinrumbleteam", href:"https://www.instagram.com/cewinrumbleteam/" },
+    { k:"GYM", v:"CrossFit MGW, Nowogrodzka 31", href:"https://maps.google.com/?q=Nowogrodzka+31+Warszawa" }
+  ],
+  catKicker:"PARTNER",
+  catTitle:"Sports catering",
+  catText:"Training is half the job — the rest happens in the kitchen. Mój Catering handles diet built around training, and you use the team discount codes.",
+  catCta:"SEE THE OFFER"
+};
+
+const DOW_PL = ["ND","PN","WT","ŚR","CZ","PT","SB"];
+const DOW_EN = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+const MON_PL = ["STY","LUT","MAR","KWI","MAJ","CZE","LIP","SIE","WRZ","PAŹ","LIS","GRU"];
+const MON_EN = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const TIMES = ["07:00","09:00","12:00","16:30","18:00","20:00"];
+
+class Component extends DCLogic {
+  state = {
+    lang: "pl", page: "start", tab: "personal",
+    w: (typeof window !== "undefined" ? window.innerWidth : 1440), menuOpen: false,
+    dayIdx: 0, slot: null, booked: false,
+    form: { first:"", last:"", phone:"", email:"", pkg:0, note:"" },
+    size: "M", pay: 0, ordered: false,
+    order: { name:"", email:"", phone:"", addr:"" }
+  };
+
+  go(page) { this.setState({ page, menuOpen:false }); window.scrollTo(0, 0); }
+  goTrain(tab) { this.setState({ page: "training", tab, menuOpen:false }); window.scrollTo(0, 0); }
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  dayList() {
+    const base = new Date(); base.setHours(0,0,0,0);
+    const out = [];
+    for (let i = 1; i <= 12; i++) {
+      const d = new Date(base.getTime() + i * 86400000);
+      out.push(d);
+    }
+    return out;
+  }
+
+  isTaken(dayIdx, ti) { return ((dayIdx + 1) * 7 + ti * 3) % 5 === 0; }
+
+  renderVals() {
+    const t = this.state.lang === "pl" ? PL : EN;
+    const pl = this.state.lang === "pl";
+    const days = this.dayList();
+    const day = days[this.state.dayIdx];
+
+    const mobile = this.state.w < 1200;
+    const midsize = !mobile && this.state.w < 1380;
+    const bar = "display:block; height:2px; background:#F2F2F0; width:100%; transition:transform 0.2s, opacity 0.2s;";
+    const navBase = "padding:9px 13px; font-family:'Barlow Condensed', sans-serif; font-weight:600; letter-spacing:0.14em; font-size:14px; text-transform:uppercase; border-radius:2px; ";
+    const navItems = ["start","about","training","merch","gallery","contact"].map(id => ({
+      label: t.nav[id],
+      go: (e) => { if (e) e.preventDefault(); this.go(id); },
+      style: navBase + (this.state.page === id ? "color:#fff; background:rgba(217,30,42,0.16); border-bottom:2px solid #D91E2A;" : "color:#9A9AA0;")
+    }));
+
+    const langBtn = (on) => "padding:7px 11px; background:" + (on ? "#D91E2A" : "transparent") + "; color:" + (on ? "#fff" : "#9A9AA0") + "; border:none; font-family:'Barlow Condensed', sans-serif; font-weight:700; letter-spacing:0.1em; font-size:13px; cursor:pointer;";
+
+    const dayBtn = (on) => "min-width:64px; padding:11px 8px; background:" + (on ? "#D91E2A" : "#0B0B0C") + "; color:" + (on ? "#fff" : "#B9B9BE") + "; border:1px solid " + (on ? "#D91E2A" : "rgba(255,255,255,0.12)") + "; border-radius:2px; cursor:pointer; font-family:'Barlow Condensed', sans-serif; text-align:center;";
+
+    const slots = TIMES.map((time, i) => {
+      const taken = this.isTaken(this.state.dayIdx, i);
+      const on = this.state.slot === i;
+      return {
+        time, label: taken ? t.taken : t.free,
+        pick: () => { if (!taken) this.setState({ slot: i, booked: false }); },
+        style: "padding:14px 10px; border-radius:2px; text-align:center; cursor:" + (taken ? "not-allowed" : "pointer") +
+          "; border:1px solid " + (on ? "#D91E2A" : "rgba(255,255,255,0.12)") +
+          "; background:" + (on ? "#D91E2A" : taken ? "#0E0E10" : "#0B0B0C") +
+          "; color:" + (taken ? "#4E4E55" : "#F2F2F0") + "; opacity:" + (taken ? "0.75" : "1") + ";"
+      };
+    });
+
+    const dfmt = (d) => (pl ? DOW_PL : DOW_EN)[d.getDay()] + " " + d.getDate() + " " + (pl ? MON_PL : MON_EN)[d.getMonth()];
+    const chosenLabel = this.state.slot === null ? t.pickFirst : dfmt(day) + " · " + TIMES[this.state.slot];
+    const ready = this.state.slot !== null && this.state.form.first && this.state.form.phone;
+
+    const bigBtn = (ok) => "width:100%; margin-top:6px; padding:16px; border:none; border-radius:2px; font-family:'Barlow Condensed', sans-serif; font-weight:700; letter-spacing:0.16em; font-size:15px; cursor:" + (ok ? "pointer" : "not-allowed") + "; background:" + (ok ? "#D91E2A" : "#26262A") + "; color:" + (ok ? "#fff" : "#6E6E75") + ";";
+
+    const setF = (k) => (e) => this.setState({ form: Object.assign({}, this.state.form, { [k]: e.target.value }) });
+
+    const mobileNav = ["start","about","training","merch","gallery","contact"].map(id => ({
+      label: t.nav[id],
+      go: (e) => { if (e) e.preventDefault(); this.go(id); },
+      style: "padding:18px 6px; border-bottom:1px solid rgba(255,255,255,0.08); font-family:Anton, sans-serif; font-size:26px; text-transform:uppercase; letter-spacing:0.02em; color:" + (this.state.page === id ? "#D91E2A" : "#F2F2F0") + ";"
+    }));
+
+    return {
+      t,
+      nav: navItems,
+      mobileNav,
+      isMobile: mobile,
+      isDesktop: !mobile,
+      menuOpen: this.state.menuOpen,
+      toggleMenu: () => this.setState({ menuOpen: !this.state.menuOpen }),
+      bar1: bar, bar2: bar, bar3: bar,
+      headerStyle: "position:" + (mobile ? "relative" : "sticky") + "; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:" + (mobile ? "14px 20px" : "14px 32px") + "; background:rgba(11,11,12,0.94); backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,0.09);",
+      logoStyle: "width:" + (mobile || midsize ? "56px" : "88px") + "; height:" + (mobile || midsize ? "56px" : "88px") + "; border-radius:50%; object-fit:cover; border:1px solid rgba(255,255,255,0.18);",
+      brandStyle: "font-family:Anton, sans-serif; font-size:" + (mobile ? "20px" : midsize ? "21px" : "34px") + "; letter-spacing:0.04em; white-space:nowrap;",
+      tagStyle: "font-family:'Barlow Condensed', sans-serif; font-size:" + (mobile || midsize ? "10px" : "13px") + "; letter-spacing:0.24em; color:#8A8A90; margin-top:" + (mobile || midsize ? "5px" : "8px") + "; white-space:nowrap;",
+      plStyle: langBtn(pl), enStyle: langBtn(!pl),
+      setPl: () => this.setState({ lang:"pl" }), setEn: () => this.setState({ lang:"en" }),
+      goStart: () => this.go("start"),
+      goAbout: (e) => { if (e) e.preventDefault(); this.go("about"); },
+      goPersonal: (e) => { if (e) e.preventDefault(); this.goTrain("personal"); },
+      goGroup: (e) => { if (e) e.preventDefault(); this.goTrain("group"); },
+
+      trainTabs: [
+        { key:"personal", label:t.tabPersonal },
+        { key:"group", label:t.tabGroup }
+      ].map(tb => ({
+        label: tb.label,
+        pick: () => this.setState({ tab: tb.key }),
+        style: "padding:14px 22px; background:transparent; border:none; border-bottom:2px solid " + (this.state.tab === tb.key ? "#D91E2A" : "transparent") + "; color:" + (this.state.tab === tb.key ? "#fff" : "#8A8A90") + "; font-family:'Barlow Condensed', sans-serif; font-weight:700; letter-spacing:0.18em; font-size:15px; cursor:pointer; margin-bottom:-1px;"
+      })),
+
+      isStart: this.state.page === "start",
+      isAbout: this.state.page === "about",
+      isTraining: this.state.page === "training",
+      isPersonal: this.state.page === "training" && this.state.tab === "personal",
+      isGroup: this.state.page === "training" && this.state.tab === "group",
+      isMerch: this.state.page === "merch",
+      isGallery: this.state.page === "gallery",
+      isContact: this.state.page === "contact",
+
+      stats: t.stats,
+      facts: t.facts,
+      offers: t.offers.map(o => Object.assign({}, o, { go: (e) => { if (e) e.preventDefault(); this.goTrain(o.page); } })),
+      schedule: t.schedule,
+      grpPoints: t.grpPoints,
+      merchSpecs: t.merchSpecs,
+      pastEvents: t.pastEvents,
+      contacts: t.contacts,
+      galleryPlaceholders: t.galleryPlaceholders,
+
+      prices: t.prices.map((p, i) => Object.assign({}, p, {
+        cardStyle: "padding:30px 28px; background:#121214; border-radius:3px; border:1px solid " + (i === 1 ? "#D91E2A" : "rgba(255,255,255,0.09)") + ";"
+      })),
+
+      days: days.map((d, i) => ({
+        dow: (pl ? DOW_PL : DOW_EN)[d.getDay()],
+        num: String(d.getDate()),
+        mon: (pl ? MON_PL : MON_EN)[d.getMonth()],
+        pick: () => this.setState({ dayIdx: i, slot: null, booked: false }),
+        style: dayBtn(this.state.dayIdx === i)
+      })),
+      slots,
+      chosenLabel,
+      booked: this.state.booked,
+      notBooked: !this.state.booked,
+      form: this.state.form,
+      pkgOptions: t.pkgOptions.map((label, i) => ({ label, value: i })),
+      onFirst: setF("first"), onLast: setF("last"), onPhone: setF("phone"), onEmail: setF("email"), onNote: setF("note"),
+      onPkg: (e) => this.setState({ form: Object.assign({}, this.state.form, { pkg: Number(e.target.value) }) }),
+      submitStyle: bigBtn(ready),
+      submitBooking: () => { if (ready) this.setState({ booked: true }); },
+      resetBooking: () => this.setState({ booked: false, slot: null, form: { first:"", last:"", phone:"", email:"", pkg:0, note:"" } }),
+
+      sizeLabels: ["S","M","L","XL","XXL"]
+    };
+  }
+}
+
+</script>
+</body>
+</html>
