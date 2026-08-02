@@ -125,6 +125,17 @@
         </div>
       </div>
     </section>
+
+    <section style="padding:0 32px 96px; max-width:1280px; margin:0 auto;">
+      <div style="padding:56px 44px; background:#121214; border:1px solid rgba(255,255,255,0.09); border-radius:3px; text-align:center;">
+        <h2 style="font-family:Anton, sans-serif; font-size:clamp(28px,3.6vw,44px); margin:0 0 16px; text-transform:uppercase;">{{ t.joinCtaTitle }}</h2>
+        <p style="max-width:620px; margin:0 auto 30px; color:#9A9AA0; font-size:16px; line-height:1.7; white-space:pre-line;">{{ t.joinCtaText }}</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
+          <a href="#" onClick="{{ goPersonal }}" style="padding:16px 30px; background:#D91E2A; color:#fff; font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:16px; letter-spacing:0.16em; border-radius:2px;" style-hover="background:#F02334;">{{ t.ctaBook }}</a>
+          <a href="#" onClick="{{ goGroup }}" style="padding:16px 30px; border:1px solid rgba(255,255,255,0.3); font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:16px; letter-spacing:0.16em; border-radius:2px;" style-hover="border-color:#fff;">{{ t.ctaGroup }}</a>
+        </div>
+      </div>
+    </section>
   </div>
   </sc-if>
 
@@ -152,6 +163,12 @@
     </div>
     <div style="margin-top:64px; padding:44px 40px; border-left:3px solid #D91E2A; background:#121214;">
       <div style="font-family:Anton, sans-serif; font-size:clamp(24px,3vw,40px); text-transform:uppercase; line-height:1.15;">{{ t.aboutQuote }}</div>
+    </div>
+    <div style="margin-top:32px; padding:44px 40px; background:#121214; border:1px solid rgba(255,255,255,0.09); border-radius:3px;">
+      <div style="font-family:'Barlow Condensed', sans-serif; letter-spacing:0.3em; font-size:12px; color:#D91E2A; margin-bottom:14px;">{{ t.aboutCtaKicker }}</div>
+      <h2 style="font-family:Anton, sans-serif; font-size:clamp(26px,3.4vw,42px); margin:0 0 18px; text-transform:uppercase; line-height:1.1;">{{ t.aboutCtaTitle }}</h2>
+      <p style="max-width:640px; color:#9A9AA0; font-size:16px; line-height:1.75; margin:0 0 30px; white-space:pre-line;">{{ t.aboutCtaText }}</p>
+      <a href="#" onClick="{{ goPersonal }}" style="display:inline-block; padding:16px 30px; background:#D91E2A; color:#fff; font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:16px; letter-spacing:0.16em; border-radius:2px;" style-hover="background:#F02334;">{{ t.ctaBook }}</a>
     </div>
   </div>
   </sc-if>
@@ -454,6 +471,12 @@ const PL = {
   teamTitle: "To nie sport. To styl życia.",
   teamText: "Ekipa, która trenuje razem od kilku lat. Od pierwszego uderzenia w worek po sparingi i treningi charytatywne. Wchodzisz na salę jako nowy — wychodzisz jako część teamu.",
   teamLink: "POZNAJ TRENERA",
+  joinCtaTitle: "Wpadaj na trening!",
+  joinCtaText: "Robimy boks, kickboxing, trochę potu, dużo zajawki.
+Zero nudy, zero spiny — każdy poziom mile widziany.
+Chcesz spróbować? Zarezerwuj termin!
+Działamy w siłowni MGW ul. Nowogrodzka 31 (centrum). Nie może Cię zabraknąć. ;)
+Do zobaczenia na sali!",
 
   aboutKicker: "TRENER",
   aboutLead: "Od ponad ośmiu lat w sportach walki. Boks i kickboxing K1 to moja pasja — i to, czym zarażam innych.",
@@ -467,6 +490,12 @@ const PL = {
     { big:"PL / EN", label:"JĘZYKI TRENINGU" }
   ],
   aboutQuote: "„Dobrze poprowadzony trening buduje charakter, nie tylko formę.”",
+  aboutCtaKicker: "GOTOWY/A NA ZMIANĘ?",
+  aboutCtaTitle: "Nie obiecuję cudów. Obiecuję efekty.",
+  aboutCtaText: "Treningi personalne dopasowane do Twoich potrzeb – z pełnym wsparciem, wiedzą i zaangażowaniem.
+Niezależnie od tego, czy zaczynasz, wracasz po przerwie, czy chcesz wejść na wyższy poziom – jestem tu, by Ci pomóc.
+
+Startujemy, kiedy Ty jesteś gotowy/a 🥊",
 
   perKicker: "1 NA 1",
   perTitle: "Treningi personalne",
@@ -578,6 +607,12 @@ const EN = {
   teamTitle: "Not a sport. A way of life.",
   teamText: "A crew that has trained together for years. From your first punch on the bag to sparring and charity sessions. You walk in as a stranger — you walk out as part of the team.",
   teamLink: "MEET THE COACH",
+  joinCtaTitle: "Come train with us!",
+  joinCtaText: "Boxing, kickboxing, a bit of sweat, a lot of energy.
+Zero boredom, zero stress — every level is welcome.
+Want to try it? Book a slot!
+We train at MGW gym, ul. Nowogrodzka 31 (city centre). You won't want to miss it ;)
+See you on the mat!",
 
   aboutKicker: "COACH",
   aboutLead: "Over eight years in combat sports. Boxing and K1 kickboxing are my passion — and what I pass on to others.",
@@ -591,6 +626,12 @@ const EN = {
     { big:"PL / EN", label:"COACHING LANGUAGES" }
   ],
   aboutQuote: "“A well-run session builds character, not just fitness.”",
+  aboutCtaKicker: "READY FOR A CHANGE?",
+  aboutCtaTitle: "I don't promise miracles. I promise results.",
+  aboutCtaText: "Personal training matched to your needs – with full support, knowledge and commitment.
+Whether you're just starting, coming back after a break, or want to reach the next level – I'm here to help.
+
+We start whenever you're ready 🥊",
 
   perKicker: "1 ON 1",
   perTitle: "Personal training",
