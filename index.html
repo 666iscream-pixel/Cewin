@@ -843,6 +843,7 @@ class Component extends DCLogic {
       facts: t.facts,
       offers: t.offers.map(o => Object.assign({}, o, { go: (e) => { if (e) e.preventDefault(); this.goTrain(o.page); } })),
       schedule: t.schedule,
+      perFeats: t.perFeats,
       grpPoints: t.grpPoints,
       merchSpecs: t.merchSpecs,
       pastEvents: t.pastEvents,
